@@ -1,0 +1,11 @@
+import platform
+import sys
+
+platform_system = platform.system()
+platform_python_implementation = platform.python_implementation()
+python_version = sys.version_info
+python_executable = sys.executable
+
+config = {}
+
+config['ignore_packages'] = set()
