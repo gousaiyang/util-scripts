@@ -51,6 +51,8 @@ try:
 except ImportError:
     pass
 
+PY2 = sys.version_info[0] < 3
+
 
 def read(filename, encoding='utf-8'):
     with open(filename, 'r', encoding=encoding) as fin:
@@ -105,7 +107,10 @@ def even_split(s, n):
 
 
 def even_split_b(s, n):
-    return [bytes(item) for item in zip(*([iter(s)] * n))]
+    if PY2:
+        return even_split(s, n)
+    else:
+        return [bytes(item) for item in zip(*([iter(s)] * n))]
 
 
 _word_size_dict = {
@@ -212,8 +217,15 @@ def ui64(x):
     return ctypes.c_ulonglong(x).value
 
 
-def xorb(s1, s2):  # only works correctly in Python 3
-    return bytes(b1 ^ b2 for b1, b2 in zip(s1, s2))
+def i2b(x):
+    return chr(x) if PY2 else bytes([x])
+
+
+def xorb(s1, s2):
+    if PY2:
+        return ''.join(chr(ord(b1) ^ ord(b2)) for b1, b2 in zip(s1, s2))
+    else:
+        return bytes(b1 ^ b2 for b1, b2 in zip(s1, s2))
 
 
 # From: https://gist.github.com/vqhuy/a7a5cde5ce1b679d3c0a
@@ -228,42 +240,42 @@ def ror(val, r_bits, max_bits):
 
 
 def md5(s):
-    if isinstance(s, str):
+    if not PY2 and isinstance(s, str):
         s = s.encode()
 
     return hashlib.md5(s).hexdigest()
 
 
 def md5_b(s):
-    if isinstance(s, str):
+    if not PY2 and isinstance(s, str):
         s = s.encode()
 
     return hashlib.md5(s).digest()
 
 
 def sha1(s):
-    if isinstance(s, str):
+    if not PY2 and isinstance(s, str):
         s = s.encode()
 
     return hashlib.sha1(s).hexdigest()
 
 
 def sha1_b(s):
-    if isinstance(s, str):
+    if not PY2 and isinstance(s, str):
         s = s.encode()
 
     return hashlib.sha1(s).digest()
 
 
 def sha256(s):
-    if isinstance(s, str):
+    if not PY2 and isinstance(s, str):
         s = s.encode()
 
     return hashlib.sha256(s).hexdigest()
 
 
 def sha256_b(s):
-    if isinstance(s, str):
+    if not PY2 and isinstance(s, str):
         s = s.encode()
 
     return hashlib.sha256(s).digest()
