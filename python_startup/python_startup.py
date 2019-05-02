@@ -217,6 +217,60 @@ def ui64(x):
     return ctypes.c_ulonglong(x).value
 
 
+def b16e(s):
+    if not PY2 and isinstance(s, str):
+        s = s.encode()
+
+    result = base64.b16encode(s)
+    return result if PY2 else result.decode()
+
+
+def b32e(s):
+    if not PY2 and isinstance(s, str):
+        s = s.encode()
+
+    result = base64.b32encode(s)
+    return result if PY2 else result.decode()
+
+
+def b64e(s):
+    if not PY2 and isinstance(s, str):
+        s = s.encode()
+
+    result = base64.b64encode(s)
+    return result if PY2 else result.decode()
+
+
+if not PY2:
+    def b85e(s):
+        if not PY2 and isinstance(s, str):
+            s = s.encode()
+
+        result = base64.b85encode(s)
+        return result if PY2 else result.decode()
+
+b16d = base64.b16decode
+b32d = base64.b32decode
+b64d = base64.b64decode
+
+if not PY2:
+    b85d = base64.b85decode
+
+
+def enhex(s):
+    if not PY2 and isinstance(s, str):
+        s = s.encode()
+
+    result = binascii.hexlify(s)
+    return result if PY2 else result.decode()
+
+
+unhex = binascii.unhexlify
+
+urlencode = urllib.quote if PY2 else urllib.parse.quote
+urldecode = urllib.unquote_plus if PY2 else urllib.parse.unquote_plus
+
+
 def i2b(x):
     return chr(x) if PY2 else bytes([x])
 
@@ -279,6 +333,13 @@ def sha256_b(s):
         s = s.encode()
 
     return hashlib.sha256(s).digest()
+
+
+def crc32(s):
+    if not PY2 and isinstance(s, str):
+        s = s.encode()
+
+    return hex(binascii.crc32(s) & 0xffffffff)[2:10]
 
 
 def rgb2hex(r, g, b):
@@ -351,3 +412,7 @@ def curl(url, method='GET', **kw):
 def curlb(url, method='GET', **kw):
     r = requests.request(method, url, **kw)
     return r.content
+
+
+if platform.system() != 'Windows':
+    libc = ctypes.CDLL(None)
