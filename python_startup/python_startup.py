@@ -54,6 +54,14 @@ except ImportError:
 PY2 = sys.version_info[0] < 3
 
 
+def _auto_encode(s):
+    return s.encode() if not PY2 and isinstance(s, str) else s
+
+
+def _auto_decode(s):
+    return s if PY2 else s.decode()
+
+
 def read(filename, encoding='utf-8'):
     with open(filename, 'r', encoding=encoding) as fin:
         return fin.read()
@@ -218,36 +226,20 @@ def ui64(x):
 
 
 def b16e(s):
-    if not PY2 and isinstance(s, str):
-        s = s.encode()
-
-    result = base64.b16encode(s)
-    return result if PY2 else result.decode()
+    return _auto_decode(base64.b16encode(_auto_encode(s)))
 
 
 def b32e(s):
-    if not PY2 and isinstance(s, str):
-        s = s.encode()
-
-    result = base64.b32encode(s)
-    return result if PY2 else result.decode()
+    return _auto_decode(base64.b32encode(_auto_encode(s)))
 
 
 def b64e(s):
-    if not PY2 and isinstance(s, str):
-        s = s.encode()
-
-    result = base64.b64encode(s)
-    return result if PY2 else result.decode()
+    return _auto_decode(base64.b64encode(_auto_encode(s)))
 
 
 if not PY2:
     def b85e(s):
-        if not PY2 and isinstance(s, str):
-            s = s.encode()
-
-        result = base64.b85encode(s)
-        return result if PY2 else result.decode()
+        return _auto_decode(base64.b85encode(_auto_encode(s)))
 
 b16d = base64.b16decode
 b32d = base64.b32decode
@@ -258,11 +250,7 @@ if not PY2:
 
 
 def enhex(s):
-    if not PY2 and isinstance(s, str):
-        s = s.encode()
-
-    result = binascii.hexlify(s)
-    return result if PY2 else result.decode()
+    return _auto_decode(binascii.hexlify(_auto_encode(s)))
 
 
 unhex = binascii.unhexlify
@@ -294,52 +282,31 @@ def ror(val, r_bits, max_bits):
 
 
 def md5(s):
-    if not PY2 and isinstance(s, str):
-        s = s.encode()
-
-    return hashlib.md5(s).hexdigest()
+    return hashlib.md5(_auto_encode(s)).hexdigest()
 
 
 def md5_b(s):
-    if not PY2 and isinstance(s, str):
-        s = s.encode()
-
-    return hashlib.md5(s).digest()
+    return hashlib.md5(_auto_encode(s)).digest()
 
 
 def sha1(s):
-    if not PY2 and isinstance(s, str):
-        s = s.encode()
-
-    return hashlib.sha1(s).hexdigest()
+    return hashlib.sha1(_auto_encode(s)).hexdigest()
 
 
 def sha1_b(s):
-    if not PY2 and isinstance(s, str):
-        s = s.encode()
-
-    return hashlib.sha1(s).digest()
+    return hashlib.sha1(_auto_encode(s)).digest()
 
 
 def sha256(s):
-    if not PY2 and isinstance(s, str):
-        s = s.encode()
-
-    return hashlib.sha256(s).hexdigest()
+    return hashlib.sha256(_auto_encode(s)).hexdigest()
 
 
 def sha256_b(s):
-    if not PY2 and isinstance(s, str):
-        s = s.encode()
-
-    return hashlib.sha256(s).digest()
+    return hashlib.sha256(_auto_encode(s)).digest()
 
 
 def crc32(s):
-    if not PY2 and isinstance(s, str):
-        s = s.encode()
-
-    return hex(binascii.crc32(s) & 0xffffffff)[2:10]
+    return hex(binascii.crc32(_auto_encode(s)) & 0xffffffff)[2:10]
 
 
 def rgb2hex(r, g, b):
