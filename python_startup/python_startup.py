@@ -26,9 +26,13 @@ import sys
 import textwrap
 import time
 import timeit
-import urllib
 import webbrowser
 from io import open
+
+try:
+    import urllib.parse
+except ImportError:
+    import urllib
 
 try:
     import html
