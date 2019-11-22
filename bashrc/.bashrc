@@ -35,7 +35,7 @@ parse_git_branch() {
     fi
 }
 
-export PS1="${debian_chroot:+($debian_chroot)}\[\`return_code_color\`\]\`show_return_code\` \[\033[01;33m\][\t] \[\`user_color\`\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;35m\]\`parse_git_branch\`\[\033[00m\]\n\\$ "
+PS1="${debian_chroot:+($debian_chroot)}\[\`return_code_color\`\]\`show_return_code\` \[\033[01;33m\][\t] \[\`user_color\`\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;35m\]\`parse_git_branch\`\[\033[00m\]\n\\$ "
 
 # History grepping.
 hgrep() {
