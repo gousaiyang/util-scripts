@@ -4,4 +4,5 @@ python3 upgrade_pip_all.py
 pip3 check
 python2 upgrade_pip_all.py
 pip2 check
+gem update
 gitup ~
