@@ -157,7 +157,17 @@ def pack(x, word_size=None, endian=None, signed=False):
     signed = bool(signed)
 
     if word_size is None:  # automatically determine byte length, only works in Python 3
-        return x.to_bytes((x.bit_length() + 7) // 8, byteorder=endian, signed=signed) or b'\x00'
+        if signed:  # adapted from pickle.encode_long()
+            if x == 0:
+                return b''
+            nbytes = (x.bit_length() >> 3) + 1
+            result = x.to_bytes(nbytes, byteorder='little', signed=True)
+            if x < 0 and nbytes > 1:
+                if result[-1] == 0xff and (result[-2] & 0x80) != 0:
+                    result = result[:-1]
+            return result if endian == 'little' else result[::-1]
+        else:
+            return x.to_bytes((x.bit_length() + 7) >> 3, byteorder=endian, signed=False)
     else:
         if not signed:
             word_size = word_size.upper()
