@@ -366,7 +366,7 @@ def pretty_size(size):
     if size == 0:
         return '0B'
 
-    units = ('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'BB')
+    units = ('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
     order = min(int(math.log(size, 1024)), len(units) - 1)
     return pretty_number(float(size) / 1024 ** order) + units[order]
 
