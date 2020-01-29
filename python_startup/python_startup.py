@@ -1,12 +1,16 @@
 import ast
 import base64
 import binascii
+import cmath
 import collections
 import ctypes
 import datetime
+import decimal
+import fractions
 import functools
 import glob
 import hashlib
+import importlib
 import io
 import itertools
 import json
@@ -14,6 +18,7 @@ import math
 import operator
 import os
 import pickle
+import pickletools
 import platform
 import random
 import re
@@ -26,6 +31,7 @@ import sys
 import textwrap
 import time
 import timeit
+import uuid
 import webbrowser
 from io import open
 
@@ -52,6 +58,11 @@ except ImportError:
 try:
     import chardet
     import requests
+except ImportError:
+    pass
+
+try:
+    import numpy as np
 except ImportError:
     pass
 
