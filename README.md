@@ -6,5 +6,5 @@ Collection of some utility scripts.
 - `color/color16.py`: test support for 16 basic colors in terminal
 - `pip_upgrade`: a simple (and configurable) script to upgrade all Python packages for a given Python installation
 - `python_startup`: my `PYTHONSTARTUP` script for better interactive use (library pre-import and utility functions)
-- `upgrade_all`: upgrade all APT packages, Python packages and git-repo-based software
-- `vimrc`: a simple vim configurable file taken from [amix/vimrc](https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim)
+- `upgrade_all`: upgrade all APT packages, Python packages, Ruby packages and git-repo-based software
+- `vimrc`: a simple vim configuration file taken from [amix/vimrc](https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim)
