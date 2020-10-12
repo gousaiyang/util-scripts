@@ -3,6 +3,7 @@ import base64
 import binascii
 import cmath
 import collections
+import contextlib
 import ctypes
 import datetime
 import decimal
@@ -11,14 +12,17 @@ import functools
 import glob
 import hashlib
 import importlib
+import inspect
 import io
 import itertools
 import json
+import keyword
 import math
 import operator
 import os
 import pickle
 import pickletools
+import pkgutil
 import platform
 import random
 import re
@@ -31,6 +35,7 @@ import sys
 import textwrap
 import time
 import timeit
+import types
 import uuid
 import webbrowser
 from io import open
@@ -52,6 +57,11 @@ except ImportError:
 
 try:
     import secrets
+except ImportError:
+    pass
+
+try:
+    import dataclasses
 except ImportError:
     pass
 
@@ -123,6 +133,18 @@ def writelines(filename, content, encoding='utf-8', append_newline=True):
 def writejson(filename, content, encoding='utf-8', **kw):
     with open(filename, 'w', encoding=encoding) as fout:
         json.dump(content, fout, **kw)
+
+
+read_text = read
+read_bytes = readb
+read_binary = readb
+read_lines = readlines
+read_json = readjson
+write_text = write
+write_bytes = writeb
+write_binary = writeb
+write_lines = writelines
+write_json = writejson
 
 
 def even_split(s, n):
@@ -286,6 +308,12 @@ urldecode = urllib.unquote_plus if PY2 else urllib.parse.unquote_plus
 
 def i2b(x):
     return chr(x) if PY2 else bytes([x])
+
+
+try:
+    bchr  # PEP 467
+except NameError:
+    bchr = i2b
 
 
 def xorb(s1, s2):
