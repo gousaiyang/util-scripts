@@ -147,15 +147,11 @@ write_lines = writelines
 write_json = writejson
 
 
-def even_split(s, n):
-    return [''.join(item) for item in zip(*([iter(s)] * n))]
-
-
-def even_split_b(s, n):
-    if PY2:
-        return even_split(s, n)
-    else:
-        return [bytes(item) for item in zip(*([iter(s)] * n))]
+def even_split(s, n, strict=True):
+    length = len(s)
+    if strict and length % n != 0:
+        raise ValueError('length of s is not a multiple of n')
+    return [s[i:i+n] for i in range(0, length, n)]
 
 
 _word_size_dict = {
@@ -317,6 +313,8 @@ except NameError:
 
 
 def xorb(s1, s2):
+    if len(s1) != len(s2):
+        raise ValueError('s1 and s2 must have the same length')
     if PY2:
         return ''.join(chr(ord(b1) ^ ord(b2)) for b1, b2 in zip(s1, s2))
     else:
