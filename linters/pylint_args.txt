@@ -1,0 +1,8 @@
+[
+    "--load-plugins=pylint.extensions.emptystring,pylint.extensions.comparetozero,pylint.extensions.docstyle,pylint.extensions.check_elif,pylint.extensions.redefined_variable_type,pylint.extensions.overlapping_exceptions,pylint.extensions.docparams,pylint.extensions.empty_comment,pylint.extensions.typing,pylint.extensions.consider_ternary_expression,pylint.extensions.code_style,pylint.extensions.set_membership",
+    "--enable=all",
+    "--disable=I,disallowed-name,invalid-name,missing-class-docstring,missing-function-docstring,missing-module-docstring,design,too-many-lines,too-many-nested-blocks,spelling,consider-using-tuple",
+    "--max-line-length=120",
+    "--init-import=yes",
+    "--ignore-imports=yes"
+]
