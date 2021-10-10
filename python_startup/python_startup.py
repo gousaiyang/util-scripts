@@ -67,6 +67,10 @@ except ImportError:
 
 try:
     import chardet
+except ImportError:
+    pass
+
+try:
     import requests
 except ImportError:
     pass
