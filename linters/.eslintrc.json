@@ -41,6 +41,7 @@
         "no-promise-executor-return": "error",
         "no-template-curly-in-string": "error",
         "no-unreachable-loop": "error",
+        "no-unused-private-class-members": "error",
         "no-useless-backreference": "error",
         "require-atomic-updates": "error",
         "accessor-pairs": "error",
