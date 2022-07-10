@@ -154,7 +154,8 @@
         "symbol-description": "error",
         "template-curly-spacing": "error",
         "yield-star-spacing": "error",
-        "prefer-object-has-own": "error"
+        "prefer-object-has-own": "error",
+        "no-constant-binary-expression": "error"
     },
     "reportUnusedDisableDirectives": true
 }
