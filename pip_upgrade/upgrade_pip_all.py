@@ -2,7 +2,8 @@
 # Please launch this script with the Python executable whose packages are what you want to upgrade.
 
 import functools
-import subprocess
+import json
+import subprocess  # nosec: B404
 import sys
 
 import colorlabels as cl
@@ -20,7 +21,7 @@ else:
 
 lower_sorted = functools.partial(sorted, key=lambda x: x.lower())
 
-timeout = config.get('timeout', 100)
+timeout = int(config.get('timeout', 100))
 ignore_packages = lower_sorted(set(config.get('ignore_packages', [])))
 ignore_packages_lower = set(p.lower() for p in ignore_packages)
 
@@ -31,8 +32,8 @@ pip_global_param = ['--timeout', str(timeout)]
 
 
 def get_outdated_list():
-    output = subprocess.check_output(pip_exec + pip_global_param + ['list', '-o', '--format=freeze'])
-    result = (s.decode() for s in (line.split(b'==')[0].strip() for line in output.split(b'\n')) if s)
+    output = subprocess.check_output(pip_exec + pip_global_param + ['list', '-o', '--format=json']).decode()  # nosec: B603
+    result = (item['name'] for item in json.loads(output))
     return lower_sorted(p for p in result if p.lower() not in ignore_packages_lower)
 
 
@@ -53,7 +54,7 @@ cl.info('These packages need upgrading: %s' % ' '.join(outdated_list))
 # Upgrade outdated packages.
 for name in outdated_list:
     cl.item('Upgrading package %s' % name)
-    subprocess.call(pip_exec + pip_global_param + ['install', '-U', name])
+    subprocess.call(pip_exec + pip_global_param + ['install', '-U', name])  # nosec: B603
 
 # Check if all packages are upgraded successfully.
 with cl.progress('Verifying update...', cl.PROGRESS_SPIN):
