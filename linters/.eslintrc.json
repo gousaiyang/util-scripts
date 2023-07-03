@@ -33,6 +33,7 @@
         "no-extra-parens": ["error", "all", {
             "returnAssign": false,
             "nestedBinaryExpressions": false,
+            "ternaryOperandBinaryExpressions": false,
             "enforceForArrowConditionals": false,
             "enforceForNewInMemberExpressions": false,
             "enforceForFunctionPrototypeMethods": false
